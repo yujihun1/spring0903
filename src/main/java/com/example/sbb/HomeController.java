@@ -37,6 +37,22 @@ public class HomeController {
         System.out.println(people);
         return people;
     }
+
+    @GetMapping("/person/remove")
+    @ResponseBody
+    public String removePerson(@RequestParam("id")int id){
+        boolean removed =false;
+        for(Person person : people) {
+            if (person.getId() == id) {
+                people.remove(person);
+                removed = true;
+            }
+        }
+        if(removed == false){
+            return id + "번째 사람이 존재하지 않습니다.";
+        }
+        return id + "번째 사람이삭제 되었습니다.";
+    }
 }
 
 @Getter
