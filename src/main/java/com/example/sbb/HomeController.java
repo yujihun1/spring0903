@@ -3,6 +3,7 @@ package com.example.sbb;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,11 +54,30 @@ public class HomeController {
         }
         return id + "번째 사람이삭제 되었습니다.";
     }
+
+    @GetMapping("/person/modify")
+    @ResponseBody
+    public String modifyPerson(@RequestParam("id")int id, @RequestParam("name")String name,@RequestParam("age")int age){
+        Person foundPerson=null;
+        for(Person person:people){
+            if(person.getId()==id){
+                foundPerson=person;
+            }
+        }
+        if(foundPerson==null){
+            return id +"번 사람이 존재하지 않습니다.";
+
+        }
+        foundPerson.setAge(age);
+        foundPerson.setName(name);
+        return id+ "번 사람이 수정 되었습니다.";
+    }
 }
 
 @Getter
 @Setter
 @AllArgsConstructor
+@ToString
 class Person{
     private  int id;
     private  String name;
